@@ -5,7 +5,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
@@ -20,7 +22,7 @@ public class Pizza {
 	private int id;
 
 	@NotEmpty(message = "name cannot be empty")
-	@Column(unique=true)
+	@Column(unique = true)
 	private String name;
 
 	@Lob
@@ -30,14 +32,19 @@ public class Pizza {
 	@Min(1)
 	private int price;
 
+	@ManyToOne
+	@JoinColumn(name = "promotion_id", nullable = true)
+	private Promotion promotion;
+
 	public Pizza() {
 	}
 
-	public Pizza(String name, String description, int price) {
-		
+	public Pizza(String name, String description, int price, Promotion promotion) {
+
 		setName(name);
 		setDescription(description);
 		setPrice(price);
+		setPromotion(promotion);
 	}
 
 	public int getId() {
@@ -72,9 +79,17 @@ public class Pizza {
 		this.price = price;
 	}
 
+	public Promotion getPromotion() {
+		return promotion;
+	}
+
+	public void setPromotion(Promotion promotion) {
+		this.promotion = promotion;
+	}
+
 	@Override
 	public String toString() {
-		return getId() + " - " + getName() + " - " + getDescription() + " - " + getPrice() + "$";
+		return getId() + " - " + getName() + " - " + getDescription() + " - " + getPrice() + "€";
 	}
 
 }

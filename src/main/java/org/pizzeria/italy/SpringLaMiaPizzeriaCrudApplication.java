@@ -2,6 +2,7 @@ package org.pizzeria.italy;
 
 import java.time.LocalDate;
 
+import java.util.List;
 import org.pizzeria.italy.pojo.Drink;
 import org.pizzeria.italy.pojo.Pizza;
 import org.pizzeria.italy.pojo.Promotion;
@@ -32,18 +33,32 @@ public class SpringLaMiaPizzeriaCrudApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
-//		PIZZAS
+//		Promotions
 
-		Pizza p1 = new Pizza("Margherita", "Pizza classica", 7);
-		Pizza p2 = new Pizza("4 formaggi", "La più buona", 10);
-		Pizza p3 = new Pizza("Napoletana", "Per gli amanti", 8);
-		Pizza p4 = new Pizza("Calzone", "Ripieno classico", 9);
-		Pizza p5 = new Pizza("Bismark", "La tedesca", 11);
-		Pizza p6 = new Pizza("Marinara", "La semplice", 4);
-		Pizza p7 = new Pizza("Diavola", "La piccante", 7);
-		Pizza p8 = new Pizza("Siciliana", "L'isolana", 7);
-		Pizza p9 = new Pizza("Boscaiola", "Quella rude", 8);
-		Pizza p10 = new Pizza("Prosciutto", "Quello cotto", 8);
+		Promotion prom1 = new Promotion("Discount 1 x 2", LocalDate.parse("2022-06-20"), LocalDate.parse("2022-07-01"));
+		Promotion prom2 = new Promotion("Discount 2 x 3", LocalDate.parse("2022-07-15"), LocalDate.parse("2022-07-25"));
+		Promotion prom3 = new Promotion("Discount 3 x 4", LocalDate.parse("2022-08-14"), LocalDate.parse("2022-08-10"));
+
+		promotionService.save(prom1);
+		promotionService.save(prom2);
+		promotionService.save(prom3);
+
+		System.out.println(prom1);
+		System.out.println(prom2);
+		System.out.println(prom3);
+
+//		Pizzas
+
+		Pizza p1 = new Pizza("Margherita", "Pizza classica", 7, prom1);
+		Pizza p2 = new Pizza("4 formaggi", "La più buona", 10, prom1);
+		Pizza p3 = new Pizza("Napoletana", "Per gli amanti", 8, prom2);
+		Pizza p4 = new Pizza("Calzone", "Ripieno classico", 9, prom1);
+		Pizza p5 = new Pizza("Bismark", "La tedesca", 11, prom3);
+		Pizza p6 = new Pizza("Marinara", "La semplice", 4, prom2);
+		Pizza p7 = new Pizza("Diavola", "La piccante", 7, prom3);
+		Pizza p8 = new Pizza("Siciliana", "L'isolana", 7, prom1);
+		Pizza p9 = new Pizza("Boscaiola", "Quella rude", 8, prom3);
+		Pizza p10 = new Pizza("Prosciutto", "Quello cotto", 8, prom2);
 
 		pizzaService.save(p1);
 		pizzaService.save(p2);
@@ -56,7 +71,7 @@ public class SpringLaMiaPizzeriaCrudApplication implements CommandLineRunner {
 		pizzaService.save(p9);
 		pizzaService.save(p10);
 
-//		DRINKS
+//		Drinks
 
 		Drink d1 = new Drink("Negroni", "Un classico", 7);
 		Drink d2 = new Drink("Manhattan", "Quello glamour", 10);
@@ -80,15 +95,26 @@ public class SpringLaMiaPizzeriaCrudApplication implements CommandLineRunner {
 		drinkService.save(d9);
 		drinkService.save(d10);
 
-//		PROMOTIONS
+//		Deleting promotions
 
-		Promotion pro1 = new Promotion("Discount 1 x 2", LocalDate.parse("2022-06-20"), LocalDate.parse("2022-07-01"));
-		Promotion pro2 = new Promotion("Discount 2 x 3", LocalDate.parse("2022-07-15"), LocalDate.parse("2022-007-25"));
-		Promotion pro3 = new Promotion("Discount 3 x 4", LocalDate.parse("2022-08-14"), LocalDate.parse("2022-08-10"));
+		promotionService.deletePromotionById(3);
+		System.out.println("---------------------------");
 
-		promotionService.save(pro1);
-		promotionService.save(pro2);
-		promotionService.save(pro3);
+//		Pizza with promotions
+		List<Pizza> pizzas = pizzaService.findAll();
+		for (Pizza pizza : pizzas) {
+			System.err.println(pizza + "\n\t" + pizza.getPromotion());
+		}
+
+		System.out.println("---------------------------");
+		List<Promotion> promotions = promotionService.findAllPizza();
+
+		for (Promotion promotion : promotions) {
+			System.err.println(promotion);
+			for (Pizza pizza : promotion.getPizzas()) {
+				System.err.println("\t" + pizza);
+			}
+		}
 
 	}
 
