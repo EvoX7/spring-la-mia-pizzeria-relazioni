@@ -53,12 +53,21 @@
 						th:field="*{name}"> <br> <label>Description</label><br>
 					<textarea name="description" th:field="*{description}"></textarea>
 					<br> <label>Price</label><br> <input type="number"
-						name="price" th:field="*{price}"> <br>
+						name="price" th:field="*{price}"> <br> <br> <label>Promotion</label>
+					<select name="promotion" class="mb-3">
+						<option th:value="null" th:field="${pizza.promotion}">-</option>
+						<option th:each="promotion : ${promotions}"
+							th:object="${promotion}" th:value="*{id}"
+							th:field="${pizza.promotion}">[[*{title}]]</option>
+					</select> <br>
 					<button class="btn btn-success mt-4 fw-bold" type="submit">Add</button>
 				</form>
 			</div>
 		</div>
 	</div>
+
+
+
 
 
 

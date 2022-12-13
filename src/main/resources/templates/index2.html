@@ -50,7 +50,7 @@
 					no available drinks</h2>
 				<div class="d-flex justify-content-between mb-2">
 					<div>
-						<a href="/drink/search" class="btn btn-primary fw-bold">Search
+						<a href="/drink/search" class="btn btn-primary fw-bold">Find
 							your drink</a>
 					</div>
 					<div>
@@ -63,7 +63,7 @@
 						<th>Name</th>
 						<th>Description</th>
 						<th>Price</th>
-						<th></th>
+						<th>Available actions</th>
 					</tr>
 					<tr class="text-center" th:each="drink : ${drinks}"
 						th:object="${drink}">

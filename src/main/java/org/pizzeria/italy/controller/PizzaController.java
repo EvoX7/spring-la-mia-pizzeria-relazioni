@@ -3,9 +3,10 @@ package org.pizzeria.italy.controller;
 import java.util.List;
 import java.util.Optional;
 
-
 import org.pizzeria.italy.pojo.Pizza;
+import org.pizzeria.italy.pojo.Promotion;
 import org.pizzeria.italy.service.PizzaService;
+import org.pizzeria.italy.service.PromotionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,6 +27,9 @@ public class PizzaController {
 	@Autowired
 	public PizzaService pizzaService;
 
+	@Autowired
+	private PromotionService promotionService;
+
 	@GetMapping
 	public String getPizzas(Model model) {
 
@@ -38,29 +42,31 @@ public class PizzaController {
 	@GetMapping("/pizza/create")
 	public String createNewPizza(Model model) {
 
+		List<Promotion> promotions = promotionService.findAll();
 		Pizza pizza = new Pizza();
 		model.addAttribute("pizza", pizza);
+		model.addAttribute("promotions", promotions);
 
 		return "pizza-create";
 	}
 
 	@PostMapping("/pizza/create")
-	public String getStorePizza(@Valid Pizza pizza, 
-			BindingResult bindingResult, RedirectAttributes redirectAttributes) {
-		
+	public String getStorePizza(@Valid Pizza pizza, BindingResult bindingResult,
+			RedirectAttributes redirectAttributes) {
+
 		if (bindingResult.hasErrors()) {
-			
+
 			System.err.println("---------------------- START ERROR ----------------------");
 			System.err.println(bindingResult.getAllErrors());
 			System.err.println("---------------------- END ERROR ------------------------");
-			
+
 			redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
-			
+
 			return "redirect:/pizza/create";
 		}
-		
+
 		pizzaService.save(pizza);
-		
+
 		return "redirect:/";
 	}
 
@@ -90,27 +96,25 @@ public class PizzaController {
 
 		return "redirect:/";
 	}
-	
+
 //	SEARCH BAR 
-	
+
 	@GetMapping("/pizza/search")
-	public String getSearchPizzaByName(Model model, 
-			@RequestParam(name = "query", required = false) String query) {
-		
+	public String getSearchPizzaByName(Model model, @RequestParam(name = "query", required = false) String query) {
+
 		List<Pizza> pizzas = null;
 		if (query == null) {
-			
+
 			pizzas = pizzaService.findAll();
-			
+
 		} else {
-			
+
 			pizzas = pizzaService.findByName(query);
 		}
-		
-		
+
 		model.addAttribute("pizzas", pizzas);
 		model.addAttribute("query", query);
-		
+
 		return "pizza-search";
 	}
 }

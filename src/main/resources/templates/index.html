@@ -28,15 +28,15 @@
 
 				</button>
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
-				<ul class="navbar-nav me-auto mt-3 mb-lg-0">
-					<li class="nav-item fw-bold"><a th:href="@{/}"
-						class="nav-link">Pizzas</a></li>
-					<li class="nav-item fw-bold"><a th:href="@{/drink}"
-						class="nav-link">Drinks</a></li>
-					<li class="nav-item fw-bold"><a class="nav-link"
-						th:href="@{/globalsearch}">Search by name</a></li>
-				</ul>
-			</div>
+					<ul class="navbar-nav me-auto mt-3 mb-lg-0">
+						<li class="nav-item fw-bold"><a th:href="@{/}"
+							class="nav-link">Pizzas</a></li>
+						<li class="nav-item fw-bold"><a th:href="@{/drink}"
+							class="nav-link">Drinks</a></li>
+						<li class="nav-item fw-bold"><a class="nav-link"
+							th:href="@{/globalsearch}">Search by name</a></li>
+					</ul>
+				</div>
 			</div>
 		</nav>
 	</header>
@@ -54,7 +54,7 @@
 					no available pizzas</h2>
 				<div class="d-flex justify-content-between mb-2">
 					<div>
-						<a href="/pizza/search" class="btn btn-primary fw-bold">Search
+						<a href="/pizza/search" class="btn btn-primary fw-bold">Find
 							your pizza</a>
 					</div>
 					<div>
@@ -67,13 +67,15 @@
 						<th>Name</th>
 						<th>Description</th>
 						<th>Price</th>
-						<th></th>
+						<th>Promotion</th>
+						<th>Available actions</th>
 					</tr>
 					<tr class="text-center" th:each="pizza : ${pizzas}"
 						th:object="${pizza}">
 						<td th:text="*{name}"></td>
 						<td th:text="*{description}"></td>
 						<td th:text="*{price}"></td>
+						<td th:text="*{promotion}">Promotion</td>
 						<td><a th:href="@{/pizza/edit/{id}(id=${pizza.id})}"
 							class="btn btn-warning fw-bold mx-2">Modify</a> <a
 							th:href="@{/pizza/delete/{id}(id=${pizza.id})}"
