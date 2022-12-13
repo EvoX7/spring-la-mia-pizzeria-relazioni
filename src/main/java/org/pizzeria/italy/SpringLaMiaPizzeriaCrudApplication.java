@@ -35,9 +35,9 @@ public class SpringLaMiaPizzeriaCrudApplication implements CommandLineRunner {
 
 //		Promotions
 
-		Promotion prom1 = new Promotion("Discount 1 x 2", LocalDate.parse("2022-06-20"), LocalDate.parse("2022-06-23"));
-		Promotion prom2 = new Promotion("Discount 2 x 3", LocalDate.parse("2022-07-15"), LocalDate.parse("2022-07-25"));
-		Promotion prom3 = new Promotion("Discount 3 x 4", LocalDate.parse("2022-08-10"), LocalDate.parse("2022-08-14"));
+		Promotion prom1 = new Promotion("Super promotion", LocalDate.parse("2022-06-20"), LocalDate.parse("2022-06-23"));
+		Promotion prom2 = new Promotion("Back to pizza", LocalDate.parse("2022-07-15"), LocalDate.parse("2022-07-25"));
+		Promotion prom3 = new Promotion("Save the pizza", LocalDate.parse("2022-08-10"), LocalDate.parse("2022-08-14"));
 
 		promotionService.save(prom1);
 		promotionService.save(prom2);

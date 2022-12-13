@@ -21,15 +21,15 @@ public class Promotion {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
-	@NotNull
+	@NotNull(message = "Title cannot be blank")
 	@Column(unique = true)
 	private String title;
 
-	@NotNull
+	@NotNull(message = "There must be a date")
 	@Column
 	private LocalDate initialDate;
 
-	@NotNull
+	@NotNull(message = "There must be a date")
 	@Column
 	private LocalDate endDate;
 	

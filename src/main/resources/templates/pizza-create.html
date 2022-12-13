@@ -32,6 +32,8 @@
 							class="nav-link">Drinks</a></li>
 						<li class="nav-item fw-bold"><a class="nav-link"
 							th:href="@{/globalsearch}">Search by name</a></li>
+						<li class="nav-item fw-bold"><a class="nav-link"
+							th:href="@{/promotion}">Promotions</a></li>
 					</ul>
 				</div>
 			</div>
@@ -53,9 +55,10 @@
 						th:field="*{name}"> <br> <label>Description</label><br>
 					<textarea name="description" th:field="*{description}"></textarea>
 					<br> <label>Price</label><br> <input type="number"
-						name="price" th:field="*{price}"> <br> <br> <label>Promotion</label>
-					<select name="promotion" class="mb-3">
-						<option th:value="null" th:field="${pizza.promotion}">-</option>
+						name="price" th:field="*{price}"> <br> <label>Promotion</label>
+					<br> <select name="promotion" class="mb-3">
+						<option th:value="null" th:field="${pizza.promotion}">No
+							promotion</option>
 						<option th:each="promotion : ${promotions}"
 							th:object="${promotion}" th:value="*{id}"
 							th:field="${pizza.promotion}">[[*{title}]]</option>
