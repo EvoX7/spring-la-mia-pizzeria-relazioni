@@ -37,6 +37,8 @@
 							th:href="@{/globalsearch}">Search by name</a></li>
 						<li class="nav-item fw-bold"><a class="nav-link"
 							th:href="@{/promotion}">Promotions</a></li>
+						<li class="nav-item fw-bold"><a class="nav-link"
+							th:href="@{/ingredient}">Our ingredients</a></li>
 					</ul>
 				</div>
 			</div>
@@ -70,6 +72,7 @@
 						<th>Description</th>
 						<th>Price</th>
 						<th>Promotion</th>
+						<th>Ingredients</th>
 						<th>Available actions</th>
 					</tr>
 					<tr class="text-center" th:each="pizza : ${pizzas}"
@@ -78,6 +81,7 @@
 						<td th:text="*{description}"></td>
 						<td th:text="*{price}"></td>
 						<td th:text="*{promotion}">Promotion</td>
+						<td th:text="*{ingredients}">Ingredients</td>
 						<td><a th:href="@{/pizza/edit/{id}(id=${pizza.id})}"
 							class="btn btn-warning fw-bold mx-2">Modify</a> <a
 							th:href="@{/pizza/delete/{id}(id=${pizza.id})}"

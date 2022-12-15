@@ -3,8 +3,10 @@ package org.pizzeria.italy.controller;
 import java.util.List;
 import java.util.Optional;
 
+import org.pizzeria.italy.pojo.Ingredient;
 import org.pizzeria.italy.pojo.Pizza;
 import org.pizzeria.italy.pojo.Promotion;
+import org.pizzeria.italy.service.IngredientService;
 import org.pizzeria.italy.service.PizzaService;
 import org.pizzeria.italy.service.PromotionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +32,9 @@ public class PizzaController {
 	@Autowired
 	private PromotionService promotionService;
 
+	@Autowired
+	private IngredientService ingredientService;
+
 	@GetMapping
 	public String getPizzas(Model model) {
 
@@ -42,10 +47,14 @@ public class PizzaController {
 	@GetMapping("/pizza/create")
 	public String createNewPizza(Model model) {
 
-		List<Promotion> promotions = promotionService.findAll();
 		Pizza pizza = new Pizza();
 		model.addAttribute("pizza", pizza);
+
+		List<Promotion> promotions = promotionService.findAll();
 		model.addAttribute("promotions", promotions);
+
+		List<Ingredient> ingredients = ingredientService.findAll();
+		model.addAttribute("ingredient", ingredients);
 
 		return "pizza-create";
 	}
@@ -65,7 +74,15 @@ public class PizzaController {
 			return "redirect:/pizza/create";
 		}
 
-		pizzaService.save(pizza);
+		try {
+
+			pizzaService.save(pizza);
+		} catch (Exception e) {
+
+			redirectAttributes.addFlashAttribute("catchError", e.getMessage());
+
+			return "redirect:/pizza/create";
+		}
 
 		return "redirect:/";
 	}
@@ -75,6 +92,9 @@ public class PizzaController {
 
 		Optional<Pizza> optPizza = pizzaService.findPizzaById(id);
 		Pizza pizza = optPizza.get();
+
+		List<Ingredient> ingredients = ingredientService.findAll();
+		model.addAttribute("ingredient", ingredients);
 
 		model.addAttribute("pizza", pizza);
 

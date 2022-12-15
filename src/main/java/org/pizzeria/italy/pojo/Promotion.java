@@ -11,6 +11,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
@@ -90,5 +91,7 @@ public class Promotion {
 	public String toString() {
 		return "(" + getId() + ")" + " " + getTitle() + " - " + getInitialDate() + " " + getEndDate();
 	}
+
+	
 
 }

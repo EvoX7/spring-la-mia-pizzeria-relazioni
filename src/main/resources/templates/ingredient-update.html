@@ -9,7 +9,6 @@
 <title>Luigi's Pizzeria</title>
 </head>
 <body>
-
 	<header>
 		<nav class="navbar navbar-expand-lg navbar-light bg-warning">
 			<div class="container-fluid">
@@ -45,61 +44,36 @@
 		</nav>
 	</header>
 
-	<div class="container">
+	<div class="container mt-5 d-flex justify-content-center">
 		<div class="row">
 			<div class="col">
-
-				<h1 class="mt-5 text-center">
-					Luigi's Pizzas List <img class="m-auto" th:src="@{/img/pizza.png}"
-						width="80px" height="80px" alt="pizza" />
-				</h1>
-
-				<h2 class="text-center" th:if="${pizzas.isEmpty()}">There are
-					no available pizzas</h2>
-				<div class="d-flex justify-content-between mb-2">
-					<div>
-						<form class="d-flex" role="search" method="GET"
-							action="/pizza/search">
-							<input class="form-control me-2" type="text" name="query"
-								th:value="${query}" aria-label="Search">
-							<button class="btn btn-primary" type="submit">Search</button>
-						</form>
-					</div>
-					<div>
-						<a href="/pizza/create" class="btn btn-success mb-1 fw-bold">Add
-							a new Pizza</a>
-					</div>
+				<h1>Edit your Ingredient</h1>
+				<div th:if="${errors}">
+					<ul>
+						<li class="text-danger" th:each="error : ${errors}"
+							th:object="${error}">Value [[*{defaultMessage}]]</li>
+					</ul>
 				</div>
-				<table class="table table-primary table-striped">
-					<tr class="text-center">
-						<th>Name</th>
-						<th>Description</th>
-						<th>Price</th>
-						<th></th>
-					</tr>
-					<tr class="text-center" th:each="pizza : ${pizzas}"
-						th:object="${pizza}">
-						<td th:text="*{name}"></td>
-						<td th:text="*{description}"></td>
-						<td th:text="*{price}"></td>
-						<td><a th:href="@{/pizza/edit/{id}(id=${pizza.id})}"
-							class="btn btn-warning fw-bold mx-2">Modify</a> <a
-							th:href="@{/pizza/delete/{id}(id=${pizza.id})}"
-							class="btn btn-danger fw-bold">Delete</a></td>
-					</tr>
-				</table>
-				<div class="d-flex justify-content-end">
-					<a th:href="@{/drink}" class="btn btn-primary fw-bold">Go to
-						Drinks =></a>
-				</div>
+				<form method="POST" action="/ingredient/edit{id}"
+					th:object="${ingredient}">
+					<input type="number" name="id" th:field="*{id}" class="d-none">
+					<label>Name</label><br> <input type="text" name="name"
+						th:field="*{name}"> <br><br>
+						
+						 <label class="fw-bold">Available
+						pizzas</label> <br>
+
+					<div th:each="pizza : ${pizzas}" th:object="${pizza}" class="mb-3">
+						<input type="checkbox" name="pizzas" th:value="*{id}"
+							th:field="${ingredient.pizzas}"> <label>[[*{name}]]</label>
+					</div>
+
+					<br>
+					<button class="btn btn-warning mt-4 fw-bold" type="submit">Modify</button>
+				</form>
 			</div>
 		</div>
 	</div>
-
-
-
-
-
 
 
 </body>

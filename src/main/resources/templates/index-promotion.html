@@ -37,6 +37,8 @@
 							th:href="@{/globalsearch}">Search by name</a></li>
 						<li class="nav-item fw-bold"><a class="nav-link"
 							th:href="@{/promotion}">Promotions</a></li>
+						<li class="nav-item fw-bold"><a class="nav-link"
+							th:href="@{/ingredient}">Our ingredients</a></li>
 					</ul>
 				</div>
 			</div>
@@ -54,7 +56,7 @@
 
 				<h2 class="text-center" th:if="${promotions.isEmpty()}">There
 					are no available promotions</h2>
-				<div class="d-flex justify-content-between mb-2">
+				<div class="d-flex justify-content-end mb-2">
 					<div>
 						<a href="/promotion/create" class="btn btn-success mb-1 fw-bold">Add
 							a new Promotion</a>
@@ -66,6 +68,7 @@
 						<th>Start Date</th>
 						<th>End Date</th>
 						<th>Pizzas</th>
+						<th>Available Actions</th>
 
 					</tr>
 					<tr class="text-center" th:each="promotion : ${promotions}"
@@ -76,6 +79,9 @@
 						<td>
 							<p th:each="pizza : ${promotion.pizzas}">[[${pizza.name}]]</p>
 						</td>
+						<td> <a
+							th:href="@{/promotion/delete/{id}(id=${promotion.id})}"
+							class="btn btn-danger fw-bold">Delete</a></td>
 
 					</tr>
 				</table>

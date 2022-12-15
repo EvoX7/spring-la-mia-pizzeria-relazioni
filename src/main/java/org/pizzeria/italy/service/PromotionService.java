@@ -25,7 +25,7 @@ public class PromotionService {
 		return promotionRepo.findAll();
 	}
 
-	public Optional<Promotion> findDrinkById(int id) {
+	public Optional<Promotion> findPromotionById(int id) {
 
 		return promotionRepo.findById(id);
 	}
@@ -33,16 +33,16 @@ public class PromotionService {
 	public void deletePromotionById(int id) {
 		promotionRepo.deleteById(id);
 	}
-	
+
 	@Transactional
 	public List<Promotion> findAllPizza() {
 		List<Promotion> promotions = promotionRepo.findAll();
-		
+
 		for (Promotion promotion : promotions) {
 			Hibernate.initialize(promotion.getPizzas());
 		}
-		
+
 		return promotions;
-		
+
 	}
 }

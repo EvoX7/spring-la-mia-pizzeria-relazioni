@@ -3,6 +3,7 @@ package org.pizzeria.italy.controller;
 import java.util.List;
 import java.util.Optional;
 
+import org.pizzeria.italy.pojo.Ingredient;
 import org.pizzeria.italy.pojo.Pizza;
 import org.pizzeria.italy.pojo.Promotion;
 import org.pizzeria.italy.service.PizzaService;
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jakarta.validation.Valid;
@@ -33,7 +33,7 @@ public class PromotionController {
 	@GetMapping
 	public String getPromotions(Model model) {
 
-		List<Promotion> promotions = promotionService.findAll();
+		List<Promotion> promotions = promotionService.findAllPizza();
 		model.addAttribute("promotions", promotions);
 
 		return "index-promotion";
@@ -51,7 +51,7 @@ public class PromotionController {
 	}
 
 	@PostMapping("/create")
-	public String getStorePromotion(@Valid Promotion promotion, BindingResult bindingResult,
+	public String storePromotion(@Valid Promotion promotion, BindingResult bindingResult,
 			RedirectAttributes redirectAttributes) {
 
 		if (bindingResult.hasErrors()) {
@@ -65,7 +65,20 @@ public class PromotionController {
 			return "redirect:/promotion/create";
 		}
 
+		List<Pizza> promotionPizzas = promotion.getPizzas();
+		for (Pizza pizza : promotionPizzas) {
+			pizza.setPromotion(promotion);
+		}
 		promotionService.save(promotion);
+
+		return "redirect:/promotion";
+	}
+
+
+	@GetMapping("/delete/{id}")
+	public String deletePromotion(@PathVariable("id") int id) {
+
+		promotionService.deletePromotionById(id);
 
 		return "redirect:/promotion";
 	}
