@@ -79,7 +79,9 @@
 						<td>
 							<p th:each="pizza : ${promotion.pizzas}">[[${pizza.name}]]</p>
 						</td>
-						<td> <a
+						<td> 
+						
+						<a
 							th:href="@{/promotion/delete/{id}(id=${promotion.id})}"
 							class="btn btn-danger fw-bold">Delete</a></td>
 

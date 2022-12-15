@@ -54,7 +54,7 @@
 							th:object="${error}">Value [[*{defaultMessage}]]</li>
 					</ul>
 				</div>
-				<form method="POST" action="/ingredient/edit{id}"
+				<form method="POST" action="/ingredient/edit"
 					th:object="${ingredient}">
 					<input type="number" name="id" th:field="*{id}" class="d-none">
 					<label>Name</label><br> <input type="text" name="name"

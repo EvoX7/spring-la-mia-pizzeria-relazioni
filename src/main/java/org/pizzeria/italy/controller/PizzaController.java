@@ -73,6 +73,8 @@ public class PizzaController {
 
 			return "redirect:/pizza/create";
 		}
+		for (Ingredient i : pizza.getIngredients()) {
+		}
 
 		try {
 
@@ -94,7 +96,10 @@ public class PizzaController {
 		Pizza pizza = optPizza.get();
 
 		List<Ingredient> ingredients = ingredientService.findAll();
-		model.addAttribute("ingredient", ingredients);
+		model.addAttribute("ingredients", ingredients);
+		
+		List<Promotion> promotions = promotionService.findAll();
+		model.addAttribute("promotions", promotions);
 
 		model.addAttribute("pizza", pizza);
 

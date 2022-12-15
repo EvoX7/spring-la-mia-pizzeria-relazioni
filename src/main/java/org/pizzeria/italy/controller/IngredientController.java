@@ -34,8 +34,6 @@ public class IngredientController {
 
 		List<Ingredient> ingredients = ingredientService.findAll();
 		model.addAttribute("ingredients", ingredients);
-		
-		
 
 		return "index-ingredients";
 	}
@@ -71,15 +69,15 @@ public class IngredientController {
 			pizza.getIngredients().add(ingredient);
 
 		}
-		   ingredientService.save(ingredient);
+		ingredientService.save(ingredient);
 
-		   return "redirect:/ingredient";
+		return "redirect:/ingredient";
 
 	}
 
 	@GetMapping("/edit/{id}")
 	public String editIngredient(@PathVariable("id") int id, Model model) {
-		
+
 		Optional<Ingredient> optIngredient = ingredientService.findIngredientById(id);
 		Ingredient ingredient = optIngredient.get();
 
@@ -92,30 +90,23 @@ public class IngredientController {
 
 	}
 
-	@PostMapping("/edit/")
-	public String updateIngredient(@Valid Ingredient ingredient, BindingResult bindingResult,
-			RedirectAttributes redirectAttributes) {
+	@PostMapping("/edit")
+	public String updateIngredient(@Valid Ingredient ingredient) {
 
-		if (bindingResult.hasErrors()) {
+		Optional<Ingredient> optI = ingredientService.findIngredientById(ingredient.getId());
+		Ingredient ing = optI.get();
 
-			System.err.println("---------------------- START ERROR ----------------------");
-			System.err.println(bindingResult.getAllErrors());
-			System.err.println("---------------------- END ERROR ------------------------");
-
-			redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
-
-			return "redirect:/ingredient/edit";
+		for (Pizza pizza : ing.getPizzas()) {
+			pizza.removeIngredients(ing);
 		}
 
-		List<Pizza> ingredientsOnPizzas = ingredient.getPizzas();
-		for (Pizza pizza : ingredientsOnPizzas) {
-			pizza.getIngredients().add(ingredient);
-
+		List<Pizza> ingredientOnPizzas = ingredient.getPizzas();
+		for (Pizza p : ingredientOnPizzas) {
+			p.addIngredients(ingredient);
 		}
+
 		ingredientService.save(ingredient);
-
-		return "redirect:/ingredient/";
-
+		return "redirect:/ingredient";
 	}
 
 	@GetMapping("/delete/{id}")
