@@ -2,17 +2,13 @@ package org.pizzeria.italy.controller;
 
 import java.util.List;
 import java.util.Optional;
-
 import org.pizzeria.italy.pojo.Drink;
-import org.pizzeria.italy.pojo.Pizza;
 import org.pizzeria.italy.service.DrinkService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.BindingResultUtils;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

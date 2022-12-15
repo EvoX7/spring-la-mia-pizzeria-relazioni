@@ -1,9 +1,6 @@
 package org.pizzeria.italy.controller;
 
 import java.util.List;
-import java.util.Optional;
-
-import org.pizzeria.italy.pojo.Ingredient;
 import org.pizzeria.italy.pojo.Pizza;
 import org.pizzeria.italy.pojo.Promotion;
 import org.pizzeria.italy.service.PizzaService;

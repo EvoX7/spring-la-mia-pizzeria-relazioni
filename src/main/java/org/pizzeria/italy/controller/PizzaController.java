@@ -73,8 +73,6 @@ public class PizzaController {
 
 			return "redirect:/pizza/create";
 		}
-		for (Ingredient i : pizza.getIngredients()) {
-		}
 
 		try {
 
